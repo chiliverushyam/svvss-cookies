@@ -1,0 +1,1 @@
+if(!window.supabase)throw new Error("Supabase library did not load.");if(!window.SVVSS_CONFIG)throw new Error("SVVSS config did not load.");window.sb=window.supabase.createClient(window.SVVSS_CONFIG.SUPABASE_URL,window.SVVSS_CONFIG.SUPABASE_ANON_KEY);
