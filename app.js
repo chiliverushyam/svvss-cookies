@@ -6,7 +6,7 @@ const fallbackProducts=window.SVVSS_PRODUCTS||[];
 function discount(p){
   return p.original_price&&p.original_price>p.price
     ?Math.round((1-p.price/p.original_price)*100)
-    :0
+    :0;
 }
 
 function addToCart(p){
@@ -20,6 +20,7 @@ function addToCart(p){
       category:p.category
     };
   }
+
   cart[p.id].qty++;
   renderCart();
   openCart();
@@ -27,17 +28,22 @@ function addToCart(p){
 
 function changeQty(id,d){
   if(!cart[id])return;
+
   cart[id].qty+=d;
-  if(cart[id].qty<=0)delete cart[id];
+
+  if(cart[id].qty<=0){
+    delete cart[id];
+  }
+
   renderCart();
 }
 
 function cartItems(){
-  return Object.values(cart)
+  return Object.values(cart);
 }
 
 function total(){
-  return cartItems().reduce((a,x)=>a+x.price*x.qty,0)
+  return cartItems().reduce((a,x)=>a+x.price*x.qty,0);
 }
 
 function renderCart(){
@@ -51,13 +57,15 @@ function renderCart(){
       <div class="cartLine">
         <div>
           <b>${x.name}</b>
-          <small>${x.weight||''}</small>
+          <small>${x.weight||""}</small>
+
           <div class="miniBtns">
             <button onclick="changeQty('${x.id}',-1)">−</button>
             ${x.qty}
             <button onclick="changeQty('${x.id}',1)">+</button>
           </div>
         </div>
+
         <b>${money(x.price*x.qty)}</b>
       </div>
     `).join("")
@@ -150,7 +158,9 @@ function sendOrderWhatsApp(){
   );
 
   const lines=order.items
-    .map(x=>`• ${x.name} ${x.weight||""} × ${x.qty} = ${money(x.price*x.qty)}`)
+    .map(x=>
+      `• ${x.name} ${x.weight||""} × ${x.qty} = ${money(x.price*x.qty)}`
+    )
     .join("%0A");
 
   const text=
@@ -189,12 +199,14 @@ function renderProducts(items){
 
     return `
       <article class="card">
+
         <div class="cardImg">
           <img
             src="${image}"
             alt="${p.name||"SVVSS Cookies"}"
             loading="lazy"
           >
+
           ${
             p.badge
               ?`<span class="sale">${p.badge}</span>`
@@ -227,10 +239,17 @@ function renderProducts(items){
         >
           🛒 Add to Cart
         </button>
+
       </article>
     `;
   }).join("");
 }
+
+/*
+  IMPORTANT:
+  The storefront now uses products.js directly.
+  Old products from Supabase will NOT replace these products.
+*/
 
 (async()=>{
   const s=$("status");
