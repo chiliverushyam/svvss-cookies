@@ -1,37 +1,334 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <meta name="description" content="SVVSS Cookies — freshly baked cookies made with love.">
+
 <title>SVVSS Cookies | Freshly Baked Happiness</title>
-<link rel="stylesheet" href="styles.css?v=4">
+
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
+
 <body>
-<div class="topbar">🍪 Freshly baked treats • Premium ingredients • Home delivery</div>
+
+<div class="topbar">
+  🍪 Freshly baked treats • Premium ingredients • Home delivery
+</div>
+
 <header class="nav">
-  <a class="brand" href="#top"><span class="brandCookie">●</span><div><b>SVVSS</b><small>COOKIES</small></div></a>
-  <nav><a class="active" href="#shop">Shop</a><a href="#why">Why Us</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
-  <div class="navActions"><button class="iconBtn" aria-label="Search">⌕</button><button class="cartBtn" onclick="openCart()">🛒 <span id="cartCount">0</span></button><a class="orderNow" href="#shop">Order Now</a></div>
-</header>
-<main id="top">
-<section class="hero">
-  <div class="heroText">
-    <span class="eyebrow">HOMEMADE • PREMIUM • NO PRESERVATIVES</span>
-    <h1>Made with love,<br>by <em>SVVSS Cookies</em></h1>
-    <p>Fresh, delicious cookies for everyday cravings, celebrations and gifting.</p>
-    <div class="heroTrust"><span>🌿 100% Fresh</span><span>♥ No Preservatives</span><span>✦ Premium Ingredients</span><span>🎁 Perfect for Gifting</span></div>
+
+  <a class="brand" href="#top">
+    <span class="brandCookie">●</span>
+    <div>
+      <b>SVVSS</b>
+      <small>COOKIES</small>
+    </div>
+  </a>
+
+  <nav>
+    <a class="active" href="#shop">Shop</a>
+    <a href="#why">Why Us</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="navActions">
+    <button class="iconBtn" aria-label="Search">⌕</button>
+
+    <button class="cartBtn" onclick="openCart()">
+      🛒 <span id="cartCount">0</span>
+    </button>
+
+    <a class="orderNow" href="#shop">Order Now</a>
   </div>
-  <div class="heroPhoto"><img src="assets/hero.jpg" alt="Fresh SVVSS chocolate chip cookies"></div>
+
+</header>
+
+<main id="top">
+
+<section class="hero">
+
+  <div class="heroText">
+
+    <span class="eyebrow">
+      HOMEMADE • PREMIUM • NO PRESERVATIVES
+    </span>
+
+    <h1>
+      Made with love,<br>
+      by <em>SVVSS Cookies</em>
+    </h1>
+
+    <p>
+      Fresh, delicious cookies for everyday cravings,
+      celebrations and gifting.
+    </p>
+
+    <div class="heroTrust">
+      <span>🌿 100% Fresh</span>
+      <span>♥ No Preservatives</span>
+      <span>✦ Premium Ingredients</span>
+      <span>🎁 Perfect for Gifting</span>
+    </div>
+
+  </div>
+
+  <div class="heroPhoto">
+    <img
+      src="assets/hero.jpg"
+      alt="Fresh SVVSS chocolate chip cookies"
+    >
+  </div>
+
 </section>
+
 <section id="shop" class="section">
-  <div class="sectionHead"><div><span class="eyebrow">OUR BESTSELLERS</span><h2>Cookies worth craving</h2><p class="sectionSub">Real flavours. Fresh bakes. Happiness in every bite.</p></div><div id="status" class="status">Loading fresh bakes…</div></div>
+
+  <div class="sectionHead">
+
+    <div>
+      <span class="eyebrow">OUR BESTSELLERS</span>
+
+      <h2>Cookies worth craving</h2>
+
+      <p class="sectionSub">
+        Real flavours. Fresh bakes. Happiness in every bite.
+      </p>
+    </div>
+
+    <div id="status" class="status">
+      Loading fresh bakes…
+    </div>
+
+  </div>
+
   <div id="products" class="products"></div>
+
 </section>
-<section id="why" class="why"><span class="eyebrow">WHY SVVSS</span><h2>Small bites. Big happiness.</h2><div class="features"><article><div class="featureIcon">🌿</div><h3>Freshly Baked</h3><p>Prepared with care for a fresh, satisfying bite.</p></article><article><div class="featureIcon">♥</div><h3>Quality Ingredients</h3><p>Thoughtful ingredients and rich flavours in every pack.</p></article><article><div class="featureIcon">🎁</div><h3>Perfect for Gifting</h3><p>Sweet treats for birthdays, celebrations and surprises.</p></article><article><div class="featureIcon">🚚</div><h3>Home Delivery</h3><p>Easy ordering with convenient delivery to your door.</p></article></div></section>
-<section id="about" class="about"><div><span class="eyebrow">OUR STORY</span><h2>Good cookies make good moments.</h2><p>SVVSS Cookies is built around one simple idea: every cookie should feel special from the first look to the last bite.</p><p>Pick your favourites, add them to your cart and place your order in just a few taps.</p></div><div class="quote">“A warm cookie can turn an ordinary day into a good day.”<small>— SVVSS Cookies</small></div></section>
-<section id="contact" class="contact"><span class="eyebrow">GET IN TOUCH</span><h2>Ready for a cookie?</h2><p>For orders, custom requests or delivery questions, contact SVVSS Cookies.</p><div class="contactBtns"><a class="btn" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp Us</a><a class="outline" href="mailto:hello@svvsscookies.store">Email Us</a></div></section>
+
+<section id="why" class="why">
+
+  <span class="eyebrow">WHY SVVSS</span>
+
+  <h2>Small bites. Big happiness.</h2>
+
+  <div class="features">
+
+    <article>
+      <div class="featureIcon">🌿</div>
+      <h3>Freshly Baked</h3>
+      <p>
+        Prepared with care for a fresh, satisfying bite.
+      </p>
+    </article>
+
+    <article>
+      <div class="featureIcon">♥</div>
+      <h3>Quality Ingredients</h3>
+      <p>
+        Thoughtful ingredients and rich flavours in every pack.
+      </p>
+    </article>
+
+    <article>
+      <div class="featureIcon">🎁</div>
+      <h3>Perfect for Gifting</h3>
+      <p>
+        Sweet treats for birthdays, celebrations and surprises.
+      </p>
+    </article>
+
+    <article>
+      <div class="featureIcon">🚚</div>
+      <h3>Home Delivery</h3>
+      <p>
+        Easy ordering with convenient delivery to your door.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<section id="about" class="about">
+
+  <div>
+
+    <span class="eyebrow">OUR STORY</span>
+
+    <h2>Good cookies make good moments.</h2>
+
+    <p>
+      SVVSS Cookies is built around one simple idea:
+      every cookie should feel special from the first look
+      to the last bite.
+    </p>
+
+    <p>
+      Pick your favourites, add them to your cart and place
+      your order in just a few taps.
+    </p>
+
+  </div>
+
+  <div class="quote">
+    “A warm cookie can turn an ordinary day into a good day.”
+    <small>— SVVSS Cookies</small>
+  </div>
+
+</section>
+
+<section id="contact" class="contact">
+
+  <span class="eyebrow">GET IN TOUCH</span>
+
+  <h2>Ready for a cookie?</h2>
+
+  <p>
+    For orders, custom requests or delivery questions,
+    contact SVVSS Cookies.
+  </p>
+
+  <div class="contactBtns">
+
+    <a
+      class="btn"
+      href="#shop"
+    >
+      Order Cookies
+    </a>
+
+    <a
+      class="outline"
+      href="mailto:hello@svvsscookies.store"
+    >
+      Email Us
+    </a>
+
+  </div>
+
+</section>
+
 </main>
-<footer><div class="brand foot"><span class="brandCookie">●</span><div><b>SVVSS</b><small>COOKIES</small></div></div><p>© 2026 SVVSS Cookies. Freshly baked with love.</p></footer>
-<div id="cartOverlay" class="overlay" onclick="closeCart(event)"><aside class="drawer" onclick="event.stopPropagation()"><button class="close" onclick="closeCart()">×</button><h2>Your Cart 🛒</h2><div id="cartItems"></div><div class="cartTotal"><span>Total</span><b id="cartTotal">₹0</b></div><div id="checkoutBox" class="checkoutBox"><h3>Delivery details</h3><input id="customerName" placeholder="Full name" autocomplete="name"><input id="customerPhone" placeholder="Mobile number" inputmode="tel" autocomplete="tel"><textarea id="customerAddress" placeholder="Full delivery address" rows="3" autocomplete="street-address"></textarea><input id="customerPincode" placeholder="Pincode" inputmode="numeric" autocomplete="postal-code"><button class="payBtn" type="button" onclick="startPayment()">Pay with Razorpay →</button><p class="note">Your current payment setup opens the Razorpay payment page. Keep the exact cart total shown above and verify payment before dispatch.</p><button class="orderBtn" type="button" onclick="sendOrderWhatsApp()">Send Order Details on WhatsApp</button></div></aside></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js?v=3"></script><script src="products.js?v=2"></script><script src="supabase-client.js?v=2"></script><script src="customer-live.js?v=2"></script><script src="app.js?v=4"></script>
-</body></html>
+
+<footer>
+
+  <div class="brand foot">
+
+    <span class="brandCookie">●</span>
+
+    <div>
+      <b>SVVSS</b>
+      <small>COOKIES</small>
+    </div>
+
+  </div>
+
+  <p>
+    © 2026 SVVSS Cookies. Freshly baked with love.
+  </p>
+
+</footer>
+
+<div
+  id="cartOverlay"
+  class="overlay"
+  onclick="closeCart(event)"
+>
+
+  <aside
+    class="drawer"
+    onclick="event.stopPropagation()"
+  >
+
+    <button
+      class="close"
+      onclick="closeCart()"
+    >
+      ×
+    </button>
+
+    <h2>Your Cart 🛒</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="cartTotal">
+      <span>Total</span>
+      <b id="cartTotal">₹0</b>
+    </div>
+
+    <div id="checkoutBox" class="checkoutBox">
+
+      <h3>Delivery details</h3>
+
+      <input
+        id="customerName"
+        placeholder="Full name"
+        autocomplete="name"
+      >
+
+      <input
+        id="customerPhone"
+        placeholder="Mobile number"
+        inputmode="tel"
+        autocomplete="tel"
+      >
+
+      <textarea
+        id="customerAddress"
+        placeholder="Full delivery address"
+        rows="3"
+        autocomplete="street-address"
+      ></textarea>
+
+      <input
+        id="customerPincode"
+        placeholder="Pincode"
+        inputmode="numeric"
+        autocomplete="postal-code"
+      >
+
+      <button
+        class="payBtn"
+        type="button"
+        onclick="startPayment()"
+      >
+        Pay with Razorpay →
+      </button>
+
+      <p class="note">
+        Your current payment setup opens the Razorpay payment page.
+        Keep the exact cart total shown above and verify payment
+        before dispatch.
+      </p>
+
+      <button
+        class="orderBtn"
+        type="button"
+        onclick="sendOrderWhatsApp()"
+      >
+        Send Order Details on WhatsApp
+      </button>
+
+    </div>
+
+  </aside>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js?v=4"></script>
+
+<script src="products.js?v=3"></script>
+
+<script src="supabase-client.js?v=3"></script>
+
+<script src="customer-live.js?v=3"></script>
+
+<script src="app.js?v=5"></script>
+
+</body>
+</html>
