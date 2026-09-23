@@ -45,7 +45,78 @@ function cartItems(){
 function total(){
   return cartItems().reduce((a,x)=>a+x.price*x.qty,0);
 }
+let deliveryCharge = null;
 
+const DELHIVERY_API =
+  "https://srivari-delhivery-api.chiluverushyam8790.workers.dev";
+
+function cartWeightGrams(){
+  return cartItems().reduce((sum, item) => {
+    const match = String(item.weight || "").match(/[\d.]+/);
+    const grams = match ? Number(match[0]) : 0;
+    return sum + (Number.isFinite(grams) ? grams * item.qty : 0);
+  }, 0);
+}
+
+async function calculateDeliveryCharge(){
+  const pin = $("customerPincode").value.trim();
+
+  if(!/^\d{6}$/.test(pin)){
+    alert("Please enter a valid 6-digit pincode.");
+    return false;
+  }
+
+  const weight = cartWeightGrams();
+
+  if(weight <= 0){
+    alert("Unable to calculate package weight.");
+    return false;
+  }
+
+  const chargeEl = $("deliveryCharge");
+
+  if(chargeEl){
+    chargeEl.textContent = "Calculating...";
+  }
+
+  try{
+    const url =
+      `${DELHIVERY_API}/?pincode=${encodeURIComponent(pin)}&weight=${Math.ceil(weight)}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if(!response.ok || !data.success){
+      throw new Error(data.error || "Delivery charge calculation failed.");
+    }
+
+    deliveryCharge = Number(data.shippingCharge);
+
+    if(!Number.isFinite(deliveryCharge)){
+      throw new Error("Invalid delivery charge received.");
+    }
+
+    renderCart();
+    return true;
+
+  }catch(error){
+    deliveryCharge = null;
+
+    if(chargeEl){
+      chargeEl.textContent = "Unavailable";
+    }
+
+    alert(
+      "Delivery charge could not be calculated. Please check the pincode and try again."
+    );
+
+    return false;
+  }
+}
+
+function grandTotal(){
+  return total() + (deliveryCharge || 0);
+}
 function renderCart(){
   const e=cartItems();
   const c=e.reduce((a,x)=>a+x.qty,0);
@@ -71,7 +142,14 @@ function renderCart(){
     `).join("")
     :"<p>Your cart is empty. Add some cookies first 🍪</p>";
 
-  $("cartTotal").textContent=money(total());
+  $("cartTotal").textContent = money(total());
+
+$("deliveryCharge").textContent =
+  deliveryCharge === null ? "—" : money(deliveryCharge);
+
+$("grandTotal").textContent =
+  deliveryCharge === null ? money(total()) : money(grandTotal());
+}
 }
 
 function openCart(){
@@ -114,8 +192,12 @@ function validateCheckout(){
   return true;
 }
 
-function startPayment(){
-  if(!validateCheckout())return;
+async function startPayment(){
+  if(!validateCheckout()) return;
+
+  const deliveryReady = await calculateDeliveryCharge();
+
+  if(!deliveryReady) return;
 
   const order={
     name:$("customerName").value.trim(),
@@ -123,7 +205,9 @@ function startPayment(){
     address:$("customerAddress").value.trim(),
     pincode:$("customerPincode").value.trim(),
     items:cartItems(),
-    total:total(),
+    subtotal:total(),
+    deliveryCharge:deliveryCharge,
+    total:grandTotal(),
     createdAt:new Date().toISOString()
   };
 
@@ -138,9 +222,12 @@ function startPayment(){
     "noopener"
   );
 }
+async function sendOrderWhatsApp(){
+  if(!validateCheckout()) return;
 
-function sendOrderWhatsApp(){
-  if(!validateCheckout())return;
+  const deliveryReady = await calculateDeliveryCharge();
+
+  if(!deliveryReady) return;
 
   const order={
     name:$("customerName").value.trim(),
@@ -148,7 +235,9 @@ function sendOrderWhatsApp(){
     address:$("customerAddress").value.trim(),
     pincode:$("customerPincode").value.trim(),
     items:cartItems(),
-    total:total(),
+    subtotal:total(),
+    deliveryCharge:deliveryCharge,
+    total:grandTotal(),
     createdAt:new Date().toISOString()
   };
 
@@ -158,38 +247,47 @@ function sendOrderWhatsApp(){
   );
 
   const lines=order.items
-    .map(x=>
+    .map(x =>
       `• ${x.name} ${x.weight||""} × ${x.qty} = ${money(x.price*x.qty)}`
     )
     .join("%0A");
 
-  const text=
-    `SVVSS Cookies Order%0A%0A`+
-    `Name: ${encodeURIComponent(order.name)}%0A`+
-    `Mobile: ${encodeURIComponent(order.phone)}%0A`+
-    `Address: ${encodeURIComponent(order.address)}%0A`+
-    `Pincode: ${encodeURIComponent(order.pincode)}%0A%0A`+
-    `${lines}%0A%0A`+
-    `Total: ${encodeURIComponent(money(order.total))}%0A%0A`+
-    `Payment: Please verify in Razorpay.`;
+  const lines=order.items
+  .map(x =>
+    `• ${x.name} ${x.weight||""} × ${x.qty} = ${money(x.price*x.qty)}`
+  )
+  .join("%0A");
 
-  const number=
-    (window.SVVSS_CONFIG&&window.SVVSS_CONFIG.WHATSAPP_NUMBER)||"";
+// IDI IKADA paste cheyyali 👇
 
-  if(!number){
-    alert(
-      "WhatsApp number is not configured yet. Add WHATSAPP_NUMBER in config.js."
-    );
-    return;
-  }
+const text=
+`SVVSS Cookies Order%0A%0A` +
+`Name: ${encodeURIComponent(order.name)}%0A` +
+`Mobile: ${encodeURIComponent(order.phone)}%0A` +
+`Address: ${encodeURIComponent(order.address)}%0A` +
+`Pincode: ${encodeURIComponent(order.pincode)}%0A%0A` +
+`${lines}%0A%0A` +
+`Subtotal: ${encodeURIComponent(money(order.subtotal))}%0A` +
+`Delivery Charge: ${encodeURIComponent(money(order.deliveryCharge))}%0A` +
+`Grand Total: ${encodeURIComponent(money(order.total))}%0A%0A` +
+`Payment: UPI`;
 
-  window.open(
-    `https://wa.me/${number}?text=${text}`,
-    "_blank",
-    "noopener"
+const number =
+  (window.SVVSS_CONFIG && window.SVVSS_CONFIG.WHATSAPP_NUMBER) || "";
+
+if(!number){
+  alert(
+    "WhatsApp number is not configured yet. Add WHATSAPP_NUMBER in config.js."
   );
+  return;
 }
 
+window.open(
+  `https://wa.me/${number}?text=${text}`,
+  "_blank",
+  "noopener"
+);
+}
 function renderProducts(items){
   const b=$("products");
 
